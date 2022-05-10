@@ -1,10 +1,16 @@
-import React, { useState} from 'react';
+import React from 'react';
 interface ILikeCounterProps {
-    initialLikes: number
+    likes: number,
+    setLikes: (likes: number) => void
 }
 
-const LikeCounter: React.FC<ILikeCounterProps> = ({ initialLikes }) => {
-    
+const LikeCounter: React.FC<ILikeCounterProps> = ({ likes, setLikes }) => {
+    function addLike() {
+        setLikes(likes + 1);
+    }
+    function dislike() {
+        setLikes(likes - 1);
+    }
     return (
         <div>
             <h1>{likes}</h1>

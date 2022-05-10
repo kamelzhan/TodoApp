@@ -7,15 +7,11 @@ import LikeCounter from './components/LikeCounter';
 const App = () => {
     
     const [likes, setLikes] = useState(42);
-    function addLike() {
-        setLikes(likes + 1);
-    }
-    function dislike() {
-        setLikes(likes - 1);
-    }
+    
     return (
         <div className="container">
-            <LikeCounter initialLikes={42}/>
+            <LikeCounter likes={likes} setLikes={setLikes} />
+            <LikeCounter likes={likes} setLikes={setLikes} />
             <div className="todolist">
                 <div className = "todotop">
                     <h1>Todo list</h1>
