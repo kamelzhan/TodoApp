@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useRef} from 'react';
 import './App.css';
-import LikeCounter from './components/LikeCounter';
+import { LikeCounterModel, LikeCounter } from './components/LikeCounter';
 
 
 
 const App = () => {
-    
-    const [likes, setLikes] = useState(42);
+
+    const model = useRef(new LikeCounterModel()).current;
     
     return (
         <div className="container">
-            <LikeCounter likes={likes} setLikes={setLikes} />
-            <LikeCounter likes={likes} setLikes={setLikes} />
+            <LikeCounter model={model}/>
+            <LikeCounter model={model}/>
             <div className="todolist">
                 <div className = "todotop">
                     <h1>Todo list</h1>

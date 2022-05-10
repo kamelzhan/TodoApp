@@ -1,24 +1,30 @@
+import { makeObservable, observable } from 'mobx';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 interface ILikeCounterProps {
-    likes: number,
-    setLikes: (likes: number) => void
+    model: LikeCounterModel
 }
-
-const LikeCounter: React.FC<ILikeCounterProps> = ({ likes, setLikes }) => {
-    function addLike() {
-        setLikes(likes + 1);
+export class LikeCounterModel {
+    constructor() {
+        makeObservable(this, { likes: observable })
     }
-    function dislike() {
-        setLikes(likes - 1);
+    addLike = () => {
+        this.likes++;
     }
+    dislike = () => {
+        this.likes--;
+    }
+    likes = 0;
+}
+const likeCounter: React.FC<ILikeCounterProps> = ({ model }) => {
+    
     return (
         <div>
-            <h1>{likes}</h1>
-            <button onClick={addLike}> Like </button>
-            <button onClick={dislike}> Dislike </button>
+            <h1>{model.likes}</h1>
+            <button onClick={model.addLike}> Like </button>
+            <button onClick={model.dislike}> Dislike </button>
         </div>
-        
         );
 }
 
-export default LikeCounter;
+export const LikeCounter = observer(likeCounter);
