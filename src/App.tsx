@@ -40,8 +40,15 @@ const App: FC = () => {
                 </div>
                 <div className="items">
                     <ul className="list">
-                        {todoList.map((task: ITodoState, key: number) => {
-                            return <TodoTask todo={task} />;
+                        {todoList.map((task: ITodoState, index: number) => {
+                            return <TodoTask
+                                todo={task}
+                                change={(completed) => {
+                                    const newList = [...todoList];
+                                    newList[index].completed = completed;
+                                    setTodoList(newList);
+                                }}
+                            />;
                         })}
                         
 
