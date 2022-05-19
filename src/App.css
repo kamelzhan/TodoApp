@@ -21,15 +21,19 @@
     padding:0;
 }
 .check{
-    vertical-align:top;
+    vertical-align:middle;
     display: inline-block;
+    margin-right: 10px;
 }
 .todotop{
     text-align:center;
 }
 li{
     margin-left:22px;
-    margin-top: 5px;
+    margin-top: 15px;
+}
+li .checked{
+    text-decoration: line-through;
 }
 .input{
     height:40px;
@@ -51,12 +55,4 @@ li{
     cursor:pointer;
     background-color: #83EEFF;
     border: solid 1px #83EEFF;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

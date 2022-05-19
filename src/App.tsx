@@ -1,29 +1,50 @@
-import React, { useRef} from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import './App.css';
-import { LikeCounterModel, LikeCounter } from './components/LikeCounter';
+import TodoTask from './components/TodoTask';
+
+export interface ITodoState {
+    completed: boolean;
+    text: string;
+}
 
 
-
-const App = () => {
-
-    const model = useRef(new LikeCounterModel()).current;
+const App: FC = () => {
+    const [todo, setTodo] = useState<string>("");
+    const [todoList, setTodoList] = useState<ITodoState[]>([]);
     
+
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        setTodo(event.target.value);
+    }
+    const addTask = (): void => {
+        const todoState = {
+            completed: false,
+            text: todo
+        }
+        setTodoList([...todoList, todoState]);
+        setTodo("");
+    }
+    /*const model = useRef(new LikeCounterModel()).current;*/
+
     return (
+        
         <div className="container">
-            <LikeCounter model={model}/>
-            <LikeCounter model={model}/>
+            {/*<LikeCounter model={model}/>*/}
+            {/*<LikeCounter model={model}/>*/}
             <div className="todolist">
                 <div className = "todotop">
                     <h1>Todo list</h1>
-                    <input className = "input" type="text" placeholder="Type your task" />
-                    <button className="add-button">Add</button>
+                    <input className="input" type="text" value={todo} placeholder="Type your task" onChange={handleChange} />
+                    <button className="add-button" onClick={ addTask }>Add</button>
                 </div>
                 <div className="items">
-                    <p id = "test">Test</p>
                     <ul className="list">
-                        <li>Wash a car</li> <input className="check" type="checkbox" />
-                        <li> Clean my room</li> <input className="check" type="checkbox" /> 
-                        <li> End todo list </li> <input className="check" type="checkbox" />
+                        {todoList.map((task: ITodoState, key: number) => {
+                            return <TodoTask todo={task} />;
+                        })}
+                        
+
                     </ul>
                 </div>
             </div>
