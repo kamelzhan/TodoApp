@@ -1,12 +1,18 @@
+﻿import { observer } from "mobx-react-lite";
 import React, { ChangeEvent } from "react";
 import { ITodoState } from "../App";
-
+import "../down.png";
+import "../up.png";
 interface IProps {
     todo: ITodoState;
-    change: (completed: boolean) => void
+    change: (completed: boolean) => void;
+    makeHigher: () => void;
+    makeLower: () => void;
 }
 
-const TodoTask = ({ todo, change }: IProps) => {
+
+
+const todoTask = ({ todo, change, makeHigher, makeLower}: IProps) => {
 
 
 
@@ -14,11 +20,12 @@ const TodoTask = ({ todo, change }: IProps) => {
         change(event.target.checked);
     }
     return (
-        <li className="item" style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+        <li className="item"> 
             <input className="check" type="checkbox" onChange={ checkTodo } />
-            <span>{ todo.text }</span>
+            <span style={{ textDecoration: todo.completed ? "line-through" : "none" }} >{todo.text}</span>
+            <button className="but" onClick={makeHigher}> up </button> <button className="but" onClick={makeLower}> down </button>
         </li>
     );
 }
 
-export default TodoTask
+export const TodoTask = observer(todoTask);

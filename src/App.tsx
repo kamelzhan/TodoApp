@@ -2,7 +2,7 @@ import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React, { ChangeEvent, FC, useRef } from 'react';
 import './App.css';
-import TodoTask from './components/TodoTask';
+import { TodoTask } from './components/TodoTask';
 
 export interface ITodoState {
     completed: boolean;
@@ -27,11 +27,22 @@ export class TodoListModel {
     readonly change = (todoState: ITodoState, completed: boolean) => {
         todoState.completed = completed;
     }
-
+    readonly makeHigher = (index: number) => {
+        if (index !== 0) {
+            const temp = this.todoList[index];
+            this.todoList[index] = this.todoList[index - 1]
+            this.todoList[index - 1] = temp;
+        }
+    }
+    readonly makeLower = (index: number) => {
+        if (index !== this.todoList.length - 1) {
+            const temp = this.todoList[index];
+            this.todoList[index] = this.todoList[index + 1];
+            this.todoList[index + 1] = temp;
+        }
+    }
     todo = "";
     todoList: ITodoState[] = [];
-
-
 }
 
 const RenderApp: FC = () => {
@@ -73,10 +84,12 @@ const RenderApp: FC = () => {
                                 key={index}
                                 todo={task}
                                 change={(completed) => model.change(task, completed)}
+                                makeHigher={() => model.makeHigher(index)}
+                                makeLower={() => model.makeLower(index)}
                             />;
                         })}
                         
-
+                    
                     </ul>
                 </div>
             </div>
